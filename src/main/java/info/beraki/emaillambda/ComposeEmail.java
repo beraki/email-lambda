@@ -3,6 +3,7 @@ package info.beraki.emaillambda;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -100,7 +101,7 @@ public class ComposeEmail {
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("drogba20020@gmail.com"));
+            message.setFrom(new InternetAddress("drogba20020@gmail.com", "Site Admin"));
             message.setReplyTo(InternetAddress.parse(getReplyTo()));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(getTo()));
@@ -111,6 +112,8 @@ public class ComposeEmail {
             toReturn = Optional.of("Email Sent Successfully");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         return toReturn;
